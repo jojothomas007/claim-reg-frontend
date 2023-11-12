@@ -1,18 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
   final String text;
   Icon? icon;
+  VoidCallback onPressed;
 
-  AppButton({Key? key, required this.text}) : super(key: key);
+  AppButton({Key? key, required this.text, required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        print('Submit');
-      },
+      onPressed: onPressed,
       child: Text(
         text,
         style: const TextStyle(

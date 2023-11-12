@@ -1,5 +1,4 @@
-import 'package:claim_reg_frontend/ClaimItemForm.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:claim_reg_frontend/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.ubuntuTextTheme(),
       ),
       debugShowCheckedModeBanner: false,
-      home: const ClaimItemForm(),
+      home: const HomePage(),
     );
   }
 }

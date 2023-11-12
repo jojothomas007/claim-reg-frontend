@@ -15,34 +15,29 @@ class AppDropdown extends StatelessWidget {
     // }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DropdownButtonFormField(
-            decoration: InputDecoration(
-              labelText: label,
-              labelStyle: const TextStyle(
-                color: Colors.grey,
-                letterSpacing: 2.0,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            style: const TextStyle(
-              color: Colors.blueGrey,
-              letterSpacing: 2.0,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-            items: itemList
-                .map((option) => DropdownMenuItem(
-                      value: option,
-                      child: Text("$option"),
-                    ))
-                .toList(),
-            onChanged: (Object? value) {},
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: const TextStyle(
+            color: Colors.grey,
+            letterSpacing: 2.0,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
-        ],
+        ),
+        style: const TextStyle(
+          color: Colors.blueGrey,
+          letterSpacing: 2.0,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+        items: itemList
+            .map((option) => DropdownMenuItem(
+                  value: option,
+                  child: Text("$option"),
+                ))
+            .toList(),
+        onChanged: (Object? value) {},
       ),
     );
   }

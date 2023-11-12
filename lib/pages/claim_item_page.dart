@@ -1,24 +1,24 @@
-import 'dart:html';
-
 import 'package:claim_reg_frontend/widgets/AppButton.dart';
 import 'package:claim_reg_frontend/widgets/AppDatebox.dart';
 import 'package:claim_reg_frontend/widgets/AppTextbox.dart';
 import 'package:flutter/material.dart';
 
-class ClaimItemForm extends StatefulWidget {
-  const ClaimItemForm({Key? key}) : super(key: key);
+import '../widgets/BaseAppBar.dart';
+
+class ClaimItemPage extends StatefulWidget {
+  const ClaimItemPage({Key? key}) : super(key: key);
 
   @override
-  State<ClaimItemForm> createState() => _ClaimItemFormState();
+  State<ClaimItemPage> createState() => _ClaimItemPageState();
 }
 
-class _ClaimItemFormState extends State<ClaimItemForm> {
+class _ClaimItemPageState extends State<ClaimItemPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Claim Item'),
-        centerTitle: true,
+      appBar: BaseAppBar(
+        title: 'Claim Items',
+        appBar: AppBar(),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -55,8 +55,16 @@ class _ClaimItemFormState extends State<ClaimItemForm> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      AppButton(text: 'Ok'),
-                      AppButton(text: 'Cancel'),
+                      AppButton(
+                          text: 'Ok',
+                          onPressed: () {
+                            throw Exception('Incomplete Implementation');
+                          }),
+                      AppButton(
+                          text: 'Cancel',
+                          onPressed: () {
+                            throw Exception('Incomplete Implementation');
+                          }),
                     ],
                   ),
                 ),

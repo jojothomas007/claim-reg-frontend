@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -37,40 +36,28 @@ class _AppDateboxState extends State<AppDatebox> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-         TextFormField(
-            readOnly: true,
-            onTap: _showDatePicker,
-            controller: controller,
-            decoration: InputDecoration(
-                labelText: label,
-                labelStyle: const TextStyle(
-                  color: Colors.grey,
-                  letterSpacing: 2.0,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-                // hintText: 'Choose date',
-                // hintStyle: const TextStyle(
-                //   color: Colors.grey,
-                //   letterSpacing: 2.0,
-                //   fontSize: 15,
-                //   fontStyle: FontStyle.italic,
-                // ),
-                suffixIcon: IconButton(
-                  onPressed: _showDatePicker,
-                  icon: Icon(Icons.calendar_month),
-                )),
-            style: const TextStyle(
-              color: Colors.blueGrey,
+      child: TextFormField(
+        readOnly: true,
+        onTap: _showDatePicker,
+        controller: controller,
+        decoration: InputDecoration(
+            labelText: label,
+            labelStyle: const TextStyle(
+              color: Colors.grey,
               letterSpacing: 2.0,
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
-          ),
-        ],
+            suffixIcon: IconButton(
+              onPressed: _showDatePicker,
+              icon: const Icon(Icons.calendar_month),
+            )),
+        style: const TextStyle(
+          color: Colors.blueGrey,
+          letterSpacing: 2.0,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
