@@ -19,19 +19,6 @@ class _ClaimDetailsPageState extends State<ClaimDetailsPage> {
   List<Claim>? claims;
   var isLoaded = false;
 
-  // addClaimItem(ClaimType claimType, Currency currency, Employee claimant,
-  //     Employee approver) async {
-  //   Claim claimToBeCreated = ClaimItem(billNumber,
-  //       billDate,
-  //       expenseCode,
-  //       costCenter,
-  //       amount,
-  //       subStartDate;
-  //       subEndDate;
-  //       0, claimant, approver, claimType, [], currency, ClaimStatus.created);
-  //   claim = await ClaimService().postClaim(claimToBeCreated);
-  // }
-
   @override
   void initState() {
     super.initState();

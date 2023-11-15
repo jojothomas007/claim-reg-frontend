@@ -75,25 +75,28 @@ class HomePage extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    getImageButton(context, 'New Claim', Icons.add_box,
-                        const CreateClaimPage()),
-                    getImageButton(
-                        context,
-                        'For Submission',
-                        Icons.view_list_rounded,
-                        const ClaimDetailsPage(
-                          claimStatus: ClaimStatus.created,
-                        )),
-                    getImageButton(
-                        context,
-                        'For Approval',
-                        Icons.playlist_add_check,
-                        const ClaimDetailsPage(
-                            claimStatus: ClaimStatus.submitted)),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      getImageButton(context, 'New Claim', Icons.add_box,
+                          const CreateClaimPage()),
+                      getImageButton(
+                          context,
+                          'For Submission',
+                          Icons.view_list_rounded,
+                          const ClaimDetailsPage(
+                            claimStatus: ClaimStatus.created,
+                          )),
+                      getImageButton(
+                          context,
+                          'For Approval',
+                          Icons.playlist_add_check,
+                          const ClaimDetailsPage(
+                              claimStatus: ClaimStatus.submitted)),
+                    ],
+                  ),
                 ),
               ],
             ),

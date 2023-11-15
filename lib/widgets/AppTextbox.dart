@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class AppTextbox extends StatelessWidget {
+class AppTextbox extends StatefulWidget {
   final String label;
   String? Function(String?)? validator;
   TextInputType? textInputType;
   List<TextInputFormatter>? inputFormatters;
   TextEditingController? controller;
+  Widget? prefixIcon;
 
   AppTextbox(
       {Key? key,
@@ -14,20 +15,26 @@ class AppTextbox extends StatelessWidget {
       this.validator,
       this.controller,
       this.textInputType,
-      this.inputFormatters})
+      this.inputFormatters,
+      this.prefixIcon})
       : super(key: key);
+  @override
+  State<AppTextbox> createState() => _AppTextboxState();
+}
 
+class _AppTextboxState extends State<AppTextbox> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
-        controller: controller,
-        keyboardType: textInputType,
-        inputFormatters: inputFormatters,
-        validator: validator,
+        controller: widget.controller,
+        keyboardType: widget.textInputType,
+        inputFormatters: widget.inputFormatters,
+        validator: widget.validator,
         decoration: InputDecoration(
-          labelText: label,
+          prefixIcon: widget.prefixIcon,
+          labelText: widget.label,
           labelStyle: const TextStyle(
             color: Colors.grey,
             letterSpacing: 2.0,

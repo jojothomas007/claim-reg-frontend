@@ -5,7 +5,7 @@ class AppButton extends StatelessWidget {
   Icon? icon;
   VoidCallback onPressed;
 
-  AppButton({Key? key, required this.text, required this.onPressed})
+  AppButton({Key? key, required this.text, required this.onPressed, this.icon})
       : super(key: key);
 
   @override

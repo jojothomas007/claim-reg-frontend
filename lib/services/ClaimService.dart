@@ -6,14 +6,13 @@ import 'package:claim_reg_frontend/enums/claim_status.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/Claim.dart';
-import '../utils/ApiConstants.dart';
+import '../utils/Constants.dart';
 
 class ClaimService {
   Future<List<Claim>> getClaims(ClaimStatus status) async {
     var client = http.Client();
     try {
-      var url =
-          Uri.parse("${ApiConstants.baseurl}/claims?status=${status.name}");
+      var url = Uri.parse("${Constants.baseurl}/claims?status=${status.name}");
       print(url.toString());
       var resp = await client.get(url);
       if (resp.statusCode == 200) {
@@ -39,7 +38,7 @@ class ClaimService {
   Future<Claim> postClaim(Claim claim) async {
     var client = http.Client();
     try {
-      var url = Uri.parse("${ApiConstants.baseurl}/claims");
+      var url = Uri.parse("${Constants.baseurl}/claims");
       log(url.toString());
       print('Request body: ${jsonEncode(claim.toJson())}');
       var resp = await client.post(url,

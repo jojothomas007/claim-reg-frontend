@@ -6,14 +6,14 @@ import 'package:http/http.dart' as http;
 
 import '../models/Claim.dart';
 import '../models/ClaimItem.dart';
-import '../utils/ApiConstants.dart';
+import '../utils/Constants.dart';
 
 class ClaimItemService {
   Future<List<Claim>> getClaimItems(int claimId) async {
     var client = http.Client();
     try {
       var url = Uri.parse(
-          "${ApiConstants.baseurl}/claimItems/findByClaim?claimId=$claimId");
+          "${Constants.baseurl}/claimItems/findByClaim?claimId=$claimId");
       print(url.toString());
       var resp = await client.get(url);
       if (resp.statusCode == 200) {
@@ -39,7 +39,7 @@ class ClaimItemService {
   Future<ClaimItem> postClaimItem(ClaimItem claimItem) async {
     var client = http.Client();
     try {
-      var url = Uri.parse("${ApiConstants.baseurl}/claim-items");
+      var url = Uri.parse("${Constants.baseurl}/claim-items");
       print(claimItem.toJson().toString());
       var resp = await client.post(url,
           headers: {HttpHeaders.contentTypeHeader: 'application/json'},

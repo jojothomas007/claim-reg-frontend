@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:claim_reg_frontend/utils/ApiConstants.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/Employee.dart';
+import '../utils/Constants.dart';
 
 class EmployeeService {
   Future<List<Employee>> getEmployees() async {
     var client = http.Client();
     try {
-      var url = Uri.parse("${ApiConstants.baseurl}/employees?isApprover=true");
+      var url = Uri.parse("${Constants.baseurl}/employees?isApprover=true");
       var resp = await client.get(url);
       if (resp.statusCode == 200) {
         var json = resp.body;

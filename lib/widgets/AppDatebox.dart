@@ -1,3 +1,4 @@
+import 'package:claim_reg_frontend/utils/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -5,8 +6,14 @@ class AppDatebox extends StatefulWidget {
   final String label;
   final String? Function(String?)? validator;
   TextEditingController? controller;
+  Widget? prefixIcon;
 
-  AppDatebox({Key? key, required this.label, this.validator, this.controller})
+  AppDatebox(
+      {Key? key,
+      required this.label,
+      this.validator,
+      this.controller,
+      this.prefixIcon})
       : super(key: key);
 
   @override
@@ -25,7 +32,8 @@ class _AppDateboxState extends State<AppDatebox> {
         .then((value) {
       setState(() {
         _dateTime = value!;
-        String formattedDate = DateFormat('yyyy-MM-dd').format(_dateTime);
+        String formattedDate =
+            DateFormat(Constants.dateFormat).format(_dateTime);
         widget.controller?.text = formattedDate;
       });
     });
@@ -48,6 +56,7 @@ class _AppDateboxState extends State<AppDatebox> {
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
+            prefixIcon: widget.prefixIcon,
             suffixIcon: IconButton(
               onPressed: _showDatePicker,
               icon: const Icon(Icons.calendar_month),
