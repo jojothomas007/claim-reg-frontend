@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:claim_reg_frontend/enums/claim_status.dart';
 import 'package:claim_reg_frontend/pages/claim_details_page.dart';
 import 'package:claim_reg_frontend/pages/create_claim_page.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,10 @@ class HomePage extends StatelessWidget {
         );
       },
       child: Container(
-        width: 80,
-        height: 200,
+        constraints: const BoxConstraints(
+            minWidth: 60, maxWidth: 100, minHeight: 140, maxHeight: 180),
+        // width: 100,
+        // height: 180,
         child: Column(
           children: [
             Padding(
@@ -53,35 +56,47 @@ class HomePage extends StatelessWidget {
         title: 'Home',
         appBar: AppBar(),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                'Claim Registration made easy !',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(50.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'Claim Registration made easy !',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  getImageButton(context, 'New Claim', Icons.add_box,
-                      const CreateClaimPage()),
-                  getImageButton(context, 'My Claims', Icons.view_list_rounded,
-                      const ClaimDetailsPage()),
-                  getImageButton(context, 'For Approval',
-                      Icons.playlist_add_check, const ClaimDetailsPage()),
-                ],
-              ),
-            ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    getImageButton(context, 'New Claim', Icons.add_box,
+                        const CreateClaimPage()),
+                    getImageButton(
+                        context,
+                        'For Submission',
+                        Icons.view_list_rounded,
+                        const ClaimDetailsPage(
+                          claimStatus: ClaimStatus.created,
+                        )),
+                    getImageButton(
+                        context,
+                        'For Approval',
+                        Icons.playlist_add_check,
+                        const ClaimDetailsPage(
+                            claimStatus: ClaimStatus.submitted)),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

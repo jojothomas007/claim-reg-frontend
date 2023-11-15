@@ -2,18 +2,18 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:claim_reg_frontend/enums/claim_status.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/Claim.dart';
+import '../models/ClaimItem.dart';
 import '../utils/ApiConstants.dart';
 
-class ClaimService {
-  Future<List<Claim>> getClaims(ClaimStatus status) async {
+class ClaimItemService {
+  Future<List<Claim>> getClaimItems(int claimId) async {
     var client = http.Client();
     try {
-      var url =
-          Uri.parse("${ApiConstants.baseurl}/claims?status=${status.name}");
+      var url = Uri.parse(
+          "${ApiConstants.baseurl}/claimItems/findByClaim?claimId=$claimId");
       print(url.toString());
       var resp = await client.get(url);
       if (resp.statusCode == 200) {
@@ -36,25 +36,24 @@ class ClaimService {
     return parsed.map<Claim>((json) => Claim.fromJson(json)).toList();
   }
 
-  Future<Claim> postClaim(Claim claim) async {
+  Future<ClaimItem> postClaimItem(ClaimItem claimItem) async {
     var client = http.Client();
     try {
-      var url = Uri.parse("${ApiConstants.baseurl}/claims");
-      log(url.toString());
-      print('Request body: ${jsonEncode(claim.toJson())}');
+      var url = Uri.parse("${ApiConstants.baseurl}/claim-items");
+      print(claimItem.toJson().toString());
       var resp = await client.post(url,
           headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-          body: jsonEncode(claim.toJson()));
+          body: jsonEncode(claimItem.toJson()));
       if (resp.statusCode == 200) {
         final json = jsonDecode(resp.body);
-        print('Response body: ${Claim.fromJson(json)}');
-        return Claim.fromJson(jsonDecode(resp.body));
+        return ClaimItem.fromJson(json);
       } else {
-        throw Exception('Failed to create a Claim : ${resp.body}');
+        print(resp.body);
+        throw Exception('Failed to create Claim Item : ${resp.body}');
       }
     } catch (e) {
       log(e.toString());
-      throw Exception('Error occurred  while loading Claims');
+      throw Exception('Error occurred  while creating a Claim Item');
     }
   }
 }

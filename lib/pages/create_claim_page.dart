@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:claim_reg_frontend/enums/claim_status.dart';
 import 'package:claim_reg_frontend/enums/claim_type.dart';
 import 'package:claim_reg_frontend/enums/currency.dart';
@@ -34,15 +32,13 @@ class _CreateClaimPageState extends State<CreateClaimPage> {
   var isLoaded = false;
 
   _CreateClaimPageState() {
-    claim = null;
     _selected_claimant = null;
     _selected_approver = null;
   }
-  createClaim(ClaimType claimType, Currency currency, Employee claimant,
-      Employee approver) async {
-    Claim claimToBeCreated = Claim(
-        0, claimant, approver, claimType, [], currency, ClaimStatus.created);
-    claim = await ClaimService().postClaim(claimToBeCreated);
+  Future<Claim> createClaim() async {
+    Claim claimToBeCreated = Claim(0, _selected_claimant!, _selected_approver!,
+        _selected_claim_type!, [], _selected_currency!, ClaimStatus.created);
+    return await ClaimService().postClaim(claimToBeCreated);
   }
 
   @override
@@ -127,19 +123,23 @@ class _CreateClaimPageState extends State<CreateClaimPage> {
                   padding: EdgeInsets.symmetric(vertical: 40.0),
                   child: AppButton(
                     text: 'Save and Proceed',
-                    onPressed: () async {
+                    onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        createClaim(_selected_claim_type!, _selected_currency!,
-                            _selected_claimant!, _selected_approver!);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ClaimItemPage()),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Claim created.')),
-                        );
-                        log('Claim created.');
+                        if (claim == null) {
+                          createClaim().then((claim) => {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text('Claim created - ${claim.id}')),
+                                ),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ClaimItemPage(claim: claim)),
+                                )
+                              });
+                        }
                       }
                     },
                   ),

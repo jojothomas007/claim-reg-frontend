@@ -1,10 +1,10 @@
 import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'Item.g.dart';
+part 'ClaimItem.g.dart';
 
 @JsonSerializable()
-class Item {
+class ClaimItem {
   @JsonKey(required: true)
   int id;
   @JsonKey(required: true, fromJson: _fromJson, toJson: _toJson)
@@ -16,13 +16,13 @@ class Item {
   @JsonKey(required: true)
   int costCenter;
   @JsonKey(required: true)
-  int amount;
+  double amount;
   @JsonKey(required: true, fromJson: _fromJson, toJson: _toJson)
   DateTime subscriptionStartDate;
   @JsonKey(required: true, fromJson: _fromJson, toJson: _toJson)
   DateTime subscriptionEndDate;
 
-  Item(
+  ClaimItem(
     this.id,
     this.billDate,
     this.billNumber,
@@ -33,9 +33,10 @@ class Item {
     this.subscriptionEndDate,
   );
 
-  factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+  factory ClaimItem.fromJson(Map<String, dynamic> json) =>
+      _$ClaimItemFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ItemToJson(this);
+  Map<String, dynamic> toJson() => _$ClaimItemToJson(this);
 
   static final _dateFormatter = DateFormat('yyyy-MM-dd');
   static DateTime _fromJson(String date) => _dateFormatter.parse(date);

@@ -24,7 +24,7 @@ Claim _$ClaimFromJson(Map<String, dynamic> json) {
     Employee.fromJson(json['approver'] as Map<String, dynamic>),
     $enumDecode(_$ClaimTypeEnumMap, json['type']),
     (json['items'] as List<dynamic>)
-        .map((e) => Item.fromJson(e as Map<String, dynamic>))
+        .map((e) => ClaimItem.fromJson(e as Map<String, dynamic>))
         .toList(),
     $enumDecode(_$CurrencyEnumMap, json['currency']),
     $enumDecode(_$ClaimStatusEnumMap, json['status']),

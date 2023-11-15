@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:claim_reg_frontend/models/Claim.dart';
+import 'package:claim_reg_frontend/models/ClaimItem.dart';
 import 'package:claim_reg_frontend/pages/create_claim_page.dart';
 import 'package:claim_reg_frontend/pages/home_page.dart';
 import 'package:claim_reg_frontend/widgets/AppButton.dart';
@@ -8,11 +10,13 @@ import 'package:claim_reg_frontend/widgets/AppTextbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../services/ClaimItemService.dart';
 import '../utils/Validators.dart';
 import '../widgets/BaseAppBar.dart';
 
 class ClaimItemPage extends StatefulWidget {
-  const ClaimItemPage({Key? key}) : super(key: key);
+  final Claim claim;
+  const ClaimItemPage({Key? key, required this.claim}) : super(key: key);
 
   @override
   State<ClaimItemPage> createState() => _ClaimItemPageState();
@@ -27,6 +31,24 @@ class _ClaimItemPageState extends State<ClaimItemPage> {
   TextEditingController amountController = TextEditingController();
   TextEditingController subStartController = TextEditingController();
   TextEditingController subEndController = TextEditingController();
+  List<ClaimItem>? claimItemList;
+
+  _ClaimItemPageState() {
+    claimItemList = [];
+  }
+
+  Future<ClaimItem> createClaimItem() async {
+    ClaimItem claimItemToBeCreated = ClaimItem(
+        0,
+        DateTime.parse(billDateController.text),
+        billNumberController.text,
+        expenseCodeController.text,
+        int.parse(costCenterController.text),
+        double.parse(amountController.text),
+        DateTime.parse(subStartController.text),
+        DateTime.parse(subEndController.text));
+    return await ClaimItemService().postClaimItem(claimItemToBeCreated);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +86,10 @@ class _ClaimItemPageState extends State<ClaimItemPage> {
                   label: 'Cost Center',
                   validator: Validators().checkFieldEmpty,
                   controller: costCenterController,
+                  textInputType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                 ),
                 // getAmountField('Amount'),
                 AppTextbox(
@@ -94,25 +120,19 @@ class _ClaimItemPageState extends State<ClaimItemPage> {
                           text: 'Add New',
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              //calim Item service to be called to create a claim item
-                              billNumberController;
-                              billDateController;
-                              expenseCodeController;
-                              costCenterController;
-                              amountController;
-                              subStartController;
-                              subEndController;
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ClaimItemPage()),
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Claim Item added.')),
-                              );
-                              log('Claim created.');
+                              createClaimItem().then((claimItem) => {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Claim Item created - ${claimItem.id}')),
+                                    ),
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ClaimItemPage(
+                                              claim: widget.claim)),
+                                    )
+                                  });
                             }
                           }),
                       AppButton(

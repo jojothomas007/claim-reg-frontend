@@ -1,3 +1,4 @@
+import 'package:claim_reg_frontend/enums/claim_status.dart';
 import 'package:claim_reg_frontend/widgets/AppCard.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +7,9 @@ import '../services/ClaimService.dart';
 import '../widgets/BaseAppBar.dart';
 
 class ClaimDetailsPage extends StatefulWidget {
-  const ClaimDetailsPage({Key? key}) : super(key: key);
+  final ClaimStatus claimStatus;
+  const ClaimDetailsPage({Key? key, required this.claimStatus})
+      : super(key: key);
 
   @override
   State<ClaimDetailsPage> createState() => _ClaimDetailsPageState();
@@ -36,7 +39,7 @@ class _ClaimDetailsPageState extends State<ClaimDetailsPage> {
   }
 
   getData() async {
-    claims = await ClaimService().getClaims();
+    claims = await ClaimService().getClaims(widget.claimStatus);
     if (claims != null) {
       setState(() {
         isLoaded = true;

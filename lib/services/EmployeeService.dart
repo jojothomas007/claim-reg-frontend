@@ -10,7 +10,7 @@ class EmployeeService {
   Future<List<Employee>> getEmployees() async {
     var client = http.Client();
     try {
-      var url = Uri.parse("${ApiConstants.baseurl}/employees?role=Approver");
+      var url = Uri.parse("${ApiConstants.baseurl}/employees?isApprover=true");
       var resp = await client.get(url);
       if (resp.statusCode == 200) {
         var json = resp.body;
