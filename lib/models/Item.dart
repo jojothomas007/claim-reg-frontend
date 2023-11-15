@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'Item.g.dart';
@@ -6,7 +7,7 @@ part 'Item.g.dart';
 class Item {
   @JsonKey(required: true)
   int id;
-  @JsonKey(required: true)
+  @JsonKey(required: true, fromJson: _fromJson, toJson: _toJson)
   DateTime billDate;
   @JsonKey(required: true)
   String billNumber;
@@ -16,9 +17,9 @@ class Item {
   int costCenter;
   @JsonKey(required: true)
   int amount;
-  @JsonKey(required: true)
+  @JsonKey(required: true, fromJson: _fromJson, toJson: _toJson)
   DateTime subscriptionStartDate;
-  @JsonKey(required: true)
+  @JsonKey(required: true, fromJson: _fromJson, toJson: _toJson)
   DateTime subscriptionEndDate;
 
   Item(
@@ -31,6 +32,12 @@ class Item {
     this.subscriptionStartDate,
     this.subscriptionEndDate,
   );
+
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+
   Map<String, dynamic> toJson() => _$ItemToJson(this);
+
+  static final _dateFormatter = DateFormat('yyyy-MM-dd');
+  static DateTime _fromJson(String date) => _dateFormatter.parse(date);
+  static String _toJson(DateTime date) => _dateFormatter.format(date);
 }

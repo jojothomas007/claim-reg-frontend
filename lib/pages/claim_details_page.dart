@@ -1,8 +1,8 @@
-import 'package:claim_reg_frontend/services/RemoteService.dart';
 import 'package:claim_reg_frontend/widgets/AppCard.dart';
 import 'package:flutter/material.dart';
 
 import '../models/Claim.dart';
+import '../services/ClaimService.dart';
 import '../widgets/BaseAppBar.dart';
 
 class ClaimDetailsPage extends StatefulWidget {
@@ -16,6 +16,19 @@ class _ClaimDetailsPageState extends State<ClaimDetailsPage> {
   List<Claim>? claims;
   var isLoaded = false;
 
+  // addClaimItem(ClaimType claimType, Currency currency, Employee claimant,
+  //     Employee approver) async {
+  //   Claim claimToBeCreated = ClaimItem(billNumber,
+  //       billDate,
+  //       expenseCode,
+  //       costCenter,
+  //       amount,
+  //       subStartDate;
+  //       subEndDate;
+  //       0, claimant, approver, claimType, [], currency, ClaimStatus.created);
+  //   claim = await ClaimService().postClaim(claimToBeCreated);
+  // }
+
   @override
   void initState() {
     super.initState();
@@ -23,8 +36,7 @@ class _ClaimDetailsPageState extends State<ClaimDetailsPage> {
   }
 
   getData() async {
-    claims = await RemoteService().getClaims();
-
+    claims = await ClaimService().getClaims();
     if (claims != null) {
       setState(() {
         isLoaded = true;

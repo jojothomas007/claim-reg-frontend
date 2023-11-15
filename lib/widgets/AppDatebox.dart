@@ -3,19 +3,18 @@ import 'package:intl/intl.dart';
 
 class AppDatebox extends StatefulWidget {
   final String label;
+  final String? Function(String?)? validator;
+  TextEditingController? controller;
 
-  const AppDatebox({Key? key, required this.label}) : super(key: key);
+  AppDatebox({Key? key, required this.label, this.validator, this.controller})
+      : super(key: key);
 
   @override
-  State<AppDatebox> createState() => _AppDateboxState(label);
+  State<AppDatebox> createState() => _AppDateboxState();
 }
 
 class _AppDateboxState extends State<AppDatebox> {
-  String label;
   DateTime _dateTime = DateTime.now();
-  TextEditingController controller = TextEditingController();
-
-  _AppDateboxState(this.label);
 
   void _showDatePicker() {
     showDatePicker(
@@ -27,7 +26,7 @@ class _AppDateboxState extends State<AppDatebox> {
       setState(() {
         _dateTime = value!;
         String formattedDate = DateFormat('yyyy-MM-dd').format(_dateTime);
-        controller.text = formattedDate;
+        widget.controller?.text = formattedDate;
       });
     });
   }
@@ -39,9 +38,10 @@ class _AppDateboxState extends State<AppDatebox> {
       child: TextFormField(
         readOnly: true,
         onTap: _showDatePicker,
-        controller: controller,
+        controller: widget.controller,
+        validator: widget.validator,
         decoration: InputDecoration(
-            labelText: label,
+            labelText: widget.label,
             labelStyle: const TextStyle(
               color: Colors.grey,
               letterSpacing: 2.0,

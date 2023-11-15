@@ -1,5 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../enums/claim_status.dart';
+import '../enums/claim_type.dart';
+import '../enums/currency.dart';
 import 'Employee.dart';
 import 'Item.dart';
 
@@ -14,13 +17,13 @@ class Claim {
   @JsonKey(required: true, name: "approver")
   Employee approver;
   @JsonKey(required: true, name: "type")
-  String type;
+  ClaimType type;
   @JsonKey(name: "items")
   List<Item> items;
   @JsonKey(required: true, name: "currency")
-  String currency;
+  Currency currency;
   @JsonKey(required: true, name: "status")
-  String status;
+  ClaimStatus status;
 
   Claim(
     this.id,
