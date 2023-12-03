@@ -7,10 +7,11 @@ import '../models/Employee.dart';
 import '../utils/Constants.dart';
 
 class EmployeeService {
-  Future<List<Employee>> getEmployees() async {
+  Future<List<Employee>> getEmployees(bool isApprover) async {
     var client = http.Client();
     try {
-      var url = Uri.parse("${Constants.baseurl}/employees?isApprover=true");
+      var url =
+          Uri.parse("${Constants.baseurl}/employees?isApprover=$isApprover");
       var resp = await client.get(url);
       if (resp.statusCode == 200) {
         var json = resp.body;

@@ -48,8 +48,8 @@ class _CreateClaimPageState extends State<CreateClaimPage> {
   }
 
   getData() async {
-    employees = await EmployeeService().getEmployees();
-    approvers = await EmployeeService().getEmployees();
+    employees = await EmployeeService().getEmployees(false);
+    approvers = await EmployeeService().getEmployees(true);
     if (employees != null) {
       setState(() {
         isLoaded = true;
