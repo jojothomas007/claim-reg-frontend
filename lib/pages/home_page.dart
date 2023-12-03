@@ -21,26 +21,24 @@ class HomePage extends StatelessWidget {
         );
       },
       child: Container(
-        constraints: const BoxConstraints(
-            minWidth: 60, maxWidth: 100, minHeight: 140, maxHeight: 180),
-        // width: 100,
-        // height: 180,
-        child: Column(
+        constraints: const BoxConstraints(minHeight: 60, maxHeight: 120),
+        child: Row(
+          // mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Icon(
-                iconData,
-                size: 70,
-                color: Colors.white,
-              ),
+            Icon(
+              iconData,
+              size: 40,
+              color: Colors.white,
             ),
-            Text(
-              text,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              child: Text(
+                text,
+                textAlign: TextAlign.start,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],
@@ -60,54 +58,53 @@ class HomePage extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(50.0),
+            padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 60),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  'Claim Registration made easy !',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 30.0),
+                  child: Text(
+                    'Claim Registration made easy !',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      getImageButton(context, 'New Claim', Icons.add_box,
-                          const CreateClaimPage()),
-                      getImageButton(
-                          context,
-                          'For Submission',
-                          Icons.view_list_rounded,
-                          const ClaimDetailsPage(
-                            claimStatus: ClaimStatus.created,
-                          )),
-                      getImageButton(
-                          context,
-                          'For Approval',
-                          Icons.playlist_add_check,
-                          const ClaimDetailsPage(
-                              claimStatus: ClaimStatus.submitted)),
-                    ],
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: getImageButton(context, 'New Claim', Icons.add_box,
+                      const CreateClaimPage()),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: getImageButton(
+                      context,
+                      'For Submission',
+                      Icons.view_list_rounded,
+                      const ClaimDetailsPage(
+                        claimStatus: ClaimStatus.created,
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: getImageButton(
+                      context,
+                      'For Approval',
+                      Icons.playlist_add_check,
+                      const ClaimDetailsPage(
+                          claimStatus: ClaimStatus.submitted)),
                 ),
               ],
             ),
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

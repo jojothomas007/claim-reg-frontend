@@ -139,7 +139,7 @@ class _ClaimItemPageState extends State<ClaimItemPage> {
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: const EdgeInsets.all(50.0),
+            padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -149,7 +149,7 @@ class _ClaimItemPageState extends State<ClaimItemPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton.icon(
-                      icon: Icon(Icons.search),
+                      icon: Icon(Icons.upload_file),
                       onPressed: () async {
                         var result = await FilePicker.platform
                             .pickFiles(initialDirectory: "C:\\temp");
@@ -171,7 +171,7 @@ class _ClaimItemPageState extends State<ClaimItemPage> {
                             MaterialStateProperty.all(Colors.lightBlue),
                       ),
                       label: const Text(
-                        'Scan Image',
+                        'Upload File',
                         style: TextStyle(
                           color: Colors.black54,
                           letterSpacing: 2.0,
@@ -236,7 +236,7 @@ class _ClaimItemPageState extends State<ClaimItemPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       AppButton(
-                          text: 'Add New',
+                          text: 'Add',
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               createClaimItem().then((claimItem) => {
