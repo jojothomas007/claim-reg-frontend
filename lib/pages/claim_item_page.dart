@@ -46,57 +46,59 @@ class _ClaimItemPageState extends State<ClaimItemPage> {
   }
 
   void scanFile(String filePath) {
-    ScannerService().postScanFile(filePath).then((docFieldList) => setState(() {
-          for (final docField in docFieldList) {
-            log('key: ${docField.key}, value: ${docField.value}, confidence: ${docField.confidence}');
-            switch (docField.key) {
-              case 'SubPeriodStart':
-                subStartController.text = docField.value;
-                if (docField.confidence > Constants.confidenceThreshold) {
-                  prefixIconSubStart = getPrefixIconGreen();
-                } else {
-                  prefixIconSubStart = getPrefixIconAmber();
+    ScannerService()
+        .postScanPdfFile(filePath)
+        .then((docFieldList) => setState(() {
+              for (final docField in docFieldList) {
+                log('key: ${docField.key}, value: ${docField.value}, confidence: ${docField.confidence}');
+                switch (docField.key) {
+                  case 'SubPeriodStart':
+                    subStartController.text = docField.value;
+                    if (docField.confidence > Constants.confidenceThreshold) {
+                      prefixIconSubStart = getPrefixIconGreen();
+                    } else {
+                      prefixIconSubStart = getPrefixIconAmber();
+                    }
+                    break;
+                  case 'SubPeriodEnd':
+                    subEndController.text = docField.value;
+                    if (docField.confidence > Constants.confidenceThreshold) {
+                      prefixIconSubEnd = getPrefixIconGreen();
+                    } else {
+                      prefixIconSubEnd = getPrefixIconAmber();
+                    }
+                    break;
+                  case 'InvoiceNumber':
+                    billNumberController.text = docField.value;
+                    if (docField.confidence > Constants.confidenceThreshold) {
+                      prefixIconBillNumber = getPrefixIconGreen();
+                    } else {
+                      prefixIconBillNumber = getPrefixIconAmber();
+                    }
+                    break;
+                  case 'InvoiceDate':
+                    billDateController.text = docField.value;
+                    if (docField.confidence > Constants.confidenceThreshold) {
+                      prefixIconBillDate = getPrefixIconGreen();
+                    } else {
+                      prefixIconBillDate = getPrefixIconAmber();
+                    }
+                    break;
+                  case 'AmountPayable':
+                    amountController.text = docField.value;
+                    if (docField.confidence > Constants.confidenceThreshold) {
+                      prefixIconAmount = getPrefixIconGreen();
+                    } else {
+                      prefixIconAmount = getPrefixIconAmber();
+                    }
+                    break;
+                  case 'Name':
+                    break;
+                  default:
+                    log("Field not configured ${docField.value}");
                 }
-                break;
-              case 'SubPeriodEnd':
-                subEndController.text = docField.value;
-                if (docField.confidence > Constants.confidenceThreshold) {
-                  prefixIconSubEnd = getPrefixIconGreen();
-                } else {
-                  prefixIconSubEnd = getPrefixIconAmber();
-                }
-                break;
-              case 'InvoiceNumber':
-                billNumberController.text = docField.value;
-                if (docField.confidence > Constants.confidenceThreshold) {
-                  prefixIconBillNumber = getPrefixIconGreen();
-                } else {
-                  prefixIconBillNumber = getPrefixIconAmber();
-                }
-                break;
-              case 'InvoiceDate':
-                billDateController.text = docField.value;
-                if (docField.confidence > Constants.confidenceThreshold) {
-                  prefixIconBillDate = getPrefixIconGreen();
-                } else {
-                  prefixIconBillDate = getPrefixIconAmber();
-                }
-                break;
-              case 'AmountPayable':
-                amountController.text = docField.value;
-                if (docField.confidence > Constants.confidenceThreshold) {
-                  prefixIconAmount = getPrefixIconGreen();
-                } else {
-                  prefixIconAmount = getPrefixIconAmber();
-                }
-                break;
-              case 'Name':
-                break;
-              default:
-                log("Field not configured ${docField.value}");
-            }
-          }
-        }));
+              }
+            }));
   }
 
   Future<ClaimItem> createClaimItem() async {
@@ -151,14 +153,13 @@ class _ClaimItemPageState extends State<ClaimItemPage> {
                     ElevatedButton.icon(
                       icon: Icon(Icons.upload_file),
                       onPressed: () async {
-                        var result = await FilePicker.platform
-                            .pickFiles(initialDirectory: "C:\\temp");
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles();
                         if (result == null) {
                           log("No file selected");
                         } else {
-                          var fileName = result.files.single.name;
-                          var filePath = "C:\\Temp\\$fileName";
-                          log(filePath);
+                          String filePath = result.files.single.path!;
+                          log("Upload file ${result.files.single.name}");
                           scanFile(filePath);
                         }
                       },

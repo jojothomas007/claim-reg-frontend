@@ -26,6 +26,27 @@ class ScannerService {
     }
   }
 
+  Future<List<DocField>> postScanPdfFile(String filePath) async {
+    var client = http.Client();
+    try {
+      var url = Uri.parse("${Constants.baseurl}/scan-pdf-file");
+      var request = http.MultipartRequest('POST', url);
+      request.files.add(await http.MultipartFile.fromPath("file", filePath));
+      var respStream = await request.send();
+      log("scanning file : $filePath");
+
+      if (respStream.statusCode == 200) {
+        var response = await http.Response.fromStream(respStream);
+        return parseDocField(response.body);
+      } else {
+        throw Exception('Failed to scan file.');
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Error occurred  while scanning file');
+    }
+  }
+
   List<DocField> parseDocField(String responseBody) {
     final parsed =
         (jsonDecode(responseBody) as List).cast<Map<String, dynamic>>();
