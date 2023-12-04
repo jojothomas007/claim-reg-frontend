@@ -7,8 +7,10 @@ import '../services/ClaimService.dart';
 import '../widgets/BaseAppBar.dart';
 
 class ClaimDetailsPage extends StatefulWidget {
+  final String heading;
   final ClaimStatus claimStatus;
-  const ClaimDetailsPage({Key? key, required this.claimStatus})
+  const ClaimDetailsPage(
+      {Key? key, required this.heading, required this.claimStatus})
       : super(key: key);
 
   @override
@@ -38,7 +40,7 @@ class _ClaimDetailsPageState extends State<ClaimDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
-        title: 'Claim Information',
+        title: widget.heading,
         appBar: AppBar(),
       ),
       body: Visibility(

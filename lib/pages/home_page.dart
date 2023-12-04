@@ -88,6 +88,7 @@ class HomePage extends StatelessWidget {
                       'For Submission',
                       Icons.view_list_rounded,
                       const ClaimDetailsPage(
+                        heading: 'For Submission',
                         claimStatus: ClaimStatus.created,
                       )),
                 ),
@@ -98,6 +99,7 @@ class HomePage extends StatelessWidget {
                       'For Approval',
                       Icons.playlist_add_check,
                       const ClaimDetailsPage(
+                          heading: 'For Approval',
                           claimStatus: ClaimStatus.submitted)),
                 ),
               ],
